@@ -5,6 +5,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from data_base.admindb import check_admin, add_admin
+from utils.states import AdminEv
+from data_base.eventbd import *
 
 router = Router()
 
@@ -19,21 +21,17 @@ async def cmd_start(message: types.Message):
             add_admin(user_telegram_id,username)
             await message.answer("Добро пожаловать, даун")
 
-"""@router.message(F.text.lower() == "список мероприятий")
-async def cmd_start(message: types.Message):
-    pass
-
-@router.message(F.text.lower() == "добавить мероприятие")
-async def cmd_start(message: types.Message):
-    pass
-
-@router.message(F.text.lower() == "удалить мероприятие")
-async def cmd_start(message: types.Message):
-    pass
-
 @router.message(F.text.lower() == "мероприятие")
-async def cmd_start(message: types.Message):
-    pass
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.set_state(AdminEv.name)
+    await message.answer("Введите название выступления")
+
+@router.message(AdminEv.name)
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.update_data(name=message.text)
+    await message.answer("Выступление добавлено")
+    add_performance(message.text)
+
 
 @router.message(F.text.lower() == "список регистрации")
 async def cmd_start(message: types.Message):
@@ -53,4 +51,4 @@ async def cmd_start(message: types.Message):
 
 @router.message(F.text.lower() == "поменять местами позиции")
 async def cmd_start(message: types.Message):
-    pass"""
+    pass

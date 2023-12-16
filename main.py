@@ -6,7 +6,6 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 from data_base.bd import *
 from data_base.admindb import *
-#КИриешка
 
 load_dotenv()
 create_table()

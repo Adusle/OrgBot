@@ -1,0 +1,5 @@
+.env
+.idea
+.vscode
+*.db
+__pycache__

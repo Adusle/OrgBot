@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from data_base.bd import *
 from data_base.admindb import *
 
-load_dotenv()
+load_dotenv(
 create_table()
 create_admin_table()
 

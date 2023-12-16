@@ -7,9 +7,8 @@ button = [[KeyboardButton(text='Список мероприятий')],
           [KeyboardButton(text='Пожаловаться')]]
 kb = types.ReplyKeyboardMarkup(keyboard=button,resize_keyboard=True)
 
-event = [[KeyboardButton(text='Мероприятие 1')],
-          [KeyboardButton(text='Мероприятие 2')],
-            [KeyboardButton(text='Вернуться')]]
+event = [[KeyboardButton(text='Мероприятие')],
+            [KeyboardButton(text='Назад')]]
 eventlist = types.ReplyKeyboardMarkup(keyboard=event,resize_keyboard=True)
 
 reg = [[KeyboardButton(text='Регистрация')],

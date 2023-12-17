@@ -1,21 +1,18 @@
-from aiogram import Router,F ,types
+from aiogram import Router,F ,types, Bot
 from aiogram.types import Message
 from aiogram.filters import Filter, Command
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from data_base.eventbd import print_list, get_performance_username_id
 from data_base.admindb import check_admin, add_admin
-from utils.states import AdminEv
+from utils.states import Admin
 from data_base.eventbd import *
 from keyboards import keyboard
-from aiogram import Bot
- 
 
 router = Router()
 
 #Чет надо будет сделать с роутерами, по папкам их распихать, иначе их просто дохуя блять
-@router.message(Command("halt"))
+@router.message(Command("halt"))#сделать парольную секретную фразу для админа
 async def cmd_start(message: types.Message):
         user_telegram_id = message.from_user.id
         username = message.from_user.username   #Получаем айди и имя пользователя
@@ -29,21 +26,20 @@ async def cmd_start(message: types.Message):
 @router.message(F.text.lower() == "мероприятие админ")
 async def cmd_start(message: types.Message):
     await message.answer("Список выступлений", reply_markup=keyboard.adminkeyboard2)
-
     data = print_list()
     result_message = ""
     for row in data:
         id_value, event_value, username_value = row
         result_message += f"Порядок: {id_value}, Название: {event_value} Выступает: {username_value}\n"
     result_message = result_message.replace("None", "Участие не подтвердил ")
-    await message.answer(text=result_message, reply_markup=keyboard.adminkeyboard2) 
+    await message.answer(text=result_message)
 
 @router.message(F.text.lower() == "добавить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.set_state(AdminEv.ev)
+    await state.set_state(Admin.ev)
     await message.answer("Введите название выступления")
 
-@router.message(AdminEv.ev)
+@router.message(Admin.ev)
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.update_data(ev=message.text)
     await message.answer("Выступление добавлено")
@@ -52,27 +48,53 @@ async def cmd_start(message: types.Message, state: FSMContext):
 
 @router.message(F.text.lower() == "удалить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.set_state(AdminEv.rem)
+    await state.set_state(Admin.rem)
     await message.answer("Выберите номер выступления")
 
-@router.message(AdminEv.rem)
+@router.message(Admin.rem)
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.update_data(rem=message.text)
-    await message.answer("Выступление удалено")
     remove_performance(message.text)
+    await message.answer("Выступление удалено")
     await state.clear()
 
-
-@router.message(F.text.lower() == "оповестить")
-async def notification(message: Message, bot:Bot):
-    l = get_performance_username_id()
-    for username, id in l:
-        await bot.send_message(chat_id=id,text=f"Расписание изменилось, прошу ознакомиться, {username}")
-
-@router.message(AdminEv.red)
+@router.message(F.text.lower() == "поменять местами позиции")
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.update_data(red = message.text)
+    await state.set_state(Admin.red)
+    await message.answer("Введите номера позиций")
+
+@router.message(Admin.red)
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.update_data(red=message.text)
     s = message.text
     replace(s[0], s[2:])
     await message.answer("Изменения внесены")
     await state.clear()
+
+"""router.message(F.text.lower() == "оповестить")
+async def notification(message: Message, bot:Bot):
+    l = get_performance_username_id()
+    for username, id in l:
+        await bot.send_message(chat_id=id,text=f"Расписание изменилось, прошу ознакомиться, {username}")
+"""
+
+@router.message(F.text.lower() == "вернуться")
+async def cmd_start(message: types.Message):
+    await message.answer("Ты уже в системе, даун", reply_markup=keyboard.adminkeyboard)
+
+@router.message(F.text.lower() == "оповестить")
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.set_state(Admin.an)
+    await message.answer("Оповестить всех или уведомить артиста?", reply_markup=keyboard.adminkeyboard3)
+
+@router.message(F.text.lower() == "оповестить всех")
+async def cmd_start(message: types.Message, state: FSMContext, bot:Bot):
+    await state.update_data(an = message.text)
+    l = get_performance_username_id()
+    for username, id in l:
+        await bot.send_message(chat_id=id, text=f"Расписание изменилось, прошу ознакомиться, {username}", reply_markup=keyboard.adminkeyboard2)
+
+@router.message(F.text.lower() == "Уведомить артиста")
+async def cmd_start(message: types.Message, state: FSMContext, bot:Bot):
+    await state.update_data(an = message.text)
+   

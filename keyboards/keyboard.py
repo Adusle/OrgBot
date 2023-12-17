@@ -22,6 +22,6 @@ adminbutton2 = [[KeyboardButton(text='Добавить позицию')],
 adminkeyboard2 = types.ReplyKeyboardMarkup(keyboard=adminbutton2, resize_keyboard=True)
 
 adminbutton3 = [[KeyboardButton(text='Оповестить всех')],
-                [KeyboardButton(text='Уведомить о выходу')]]
+                [KeyboardButton(text='Уведомить артиста')]]
 
 adminkeyboard3 = types.ReplyKeyboardMarkup(keyboard=adminbutton3, resize_keyboard=True)

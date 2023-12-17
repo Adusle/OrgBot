@@ -5,6 +5,7 @@ class AdminRegistration(StatesGroup):
 
 class AdminEv(StatesGroup):
     ev = State()
+    rem= State()
 
 class UserRegistration(StatesGroup):
     name = State()

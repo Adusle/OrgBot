@@ -77,8 +77,7 @@ async def cmd_start(message: types.Message):
     await message.answer("Ты уже в системе, даун", reply_markup=keyboard.adminkeyboard)
 
 @router.message(F.text.lower() == "оповестить")
-async def cmd_start(message: types.Message, state: FSMContext):
-    await state.set_state(Admin.an)
+async def cmd_start(message: types.Message):
     await message.answer("Оповестить всех или уведомить артиста?", reply_markup=keyboard.adminkeyboard3)
 
 @router.message(F.text.lower() == "оповестить всех")
@@ -89,4 +88,5 @@ async def cmd_start(message: types.Message, bot:Bot):
 
 @router.message(F.text.lower() == "Уведомить артиста")
 async def cmd_start(message: types.Message, state: FSMContext, bot:Bot):
-    await state.update_data(an = message.text, reply_markup=keyboard.adminkeyboard2)
+    await state.set_state(Admin.an)
+    

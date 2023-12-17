@@ -22,33 +22,39 @@ async def cmd_start(message: types.Message):
             await message.answer("Добро пожаловать, даун")
 
 @router.message(F.text.lower() == "мероприятие")
+async def cmd_start(message: types.Message):
+    await message.answer("Список выступлений")
+
+@router.message(F.text.lower() == "добавить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.set_state(AdminEv.name)
+    await state.set_state(AdminEv.ev)
     await message.answer("Введите название выступления")
 
-@router.message(AdminEv.name)
+@router.message(AdminEv.ev)
 async def cmd_start(message: types.Message, state: FSMContext):
-    await state.update_data(name=message.text)
+    await state.update_data(ev=message.text)
     await message.answer("Выступление добавлено")
     add_performance(message.text)
     await state.clear()
 
+@router.message(F.text.lower() == "удалить позицию")
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.set_state(AdminEv.rem)
+    await message.answer("Выберите номер выступления")
 
-@router.message(F.text.lower() == "список регистрации")
-async def cmd_start(message: types.Message):
-    pass
+@router.message(AdminEv.rem)
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.update_data(rem=message.text)
+    await message.answer("Выступление удалено")
+    remove_performance(message.text)
+    await state.clear()
 
 @router.message(F.text.lower() == "редактировать мероприятие ")
 async def cmd_start(message: types.Message):
     pass
 
-@router.message(F.text.lower() == "добавить позицию")
-async def cmd_start(message: types.Message):
-    pass
 
-@router.message(F.text.lower() == "удалить позицию")
-async def cmd_start(message: types.Message):
-    pass
+
 
 @router.message(F.text.lower() == "поменять местами позиции")
 async def cmd_start(message: types.Message):

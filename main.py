@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import os
-from handlers import adminreg, user_commands, admin_commands
+from handlers import user_commands, admin_commands
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 from data_base.bd import *

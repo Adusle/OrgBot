@@ -35,7 +35,7 @@ async def cmd_start(message: types.Message):
         id_value, event_value, username_value = row
         result_message += f"Порядок: {id_value}, Название: {event_value} Выступает: {username_value}\n"
     result_message = result_message.replace("None", "Участие не подтвердил ")
-    await message.answer(text=result_message) 
+    await message.answer(text=result_message, reply_markup=keyboard.adminkeyboard2)) 
 
 @router.message(F.text.lower() == "добавить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):

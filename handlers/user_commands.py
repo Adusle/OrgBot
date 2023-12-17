@@ -1,4 +1,4 @@
-from aiogram import Router, F , types
+from aiogram import Router, F , types, Bot
 from data_base.bd import get_users_id, add_user
 from keyboards import *
 from aiogram.types import Message

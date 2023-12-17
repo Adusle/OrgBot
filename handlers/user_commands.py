@@ -5,7 +5,7 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.filters import Command , CommandObject, CommandStart
-from utils.states import UserEv, UserRegistration
+from utils.states import User
 from data_base.eventbd import add_username, print_list, add_user_id
 
 router = Router()
@@ -13,10 +13,10 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer("Добро пожаловать\n Для того, чтобы пользоваться ботом необходимо пройти регистрацию\n Введите ваше имя или же название группы, либо отвественно если, это парное выступление\n")
-    await state.set_state(UserRegistration.name)
+    await state.set_state(User.name)
 
 
-@router.message(UserRegistration.name)
+@router.message(User.name)
 async def add_user_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     user_telegram_id = message.from_user.id
@@ -44,10 +44,10 @@ async def keyboard_us(message: types.Message):
 
 @router.message(F.text.lower()=="зарегистрироваться")
 async def keyboard_us(message: types.Message, state: FSMContext):
-    await state.set_state(UserEv.ev)
+    await state.set_state(User.ev)
     await message.answer("Выберите номер выступления", reply_markup=keyboard.event)
 
-@router.message(UserEv.ev)
+@router.message(User.ev)
 async def keyboard_us(message: types.Message, state: FSMContext):
     await state.update_data(ev=message.text)
     username = message.from_user.id

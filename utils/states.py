@@ -1,15 +1,11 @@
 from aiogram.fsm.state import StatesGroup, State
 
-class AdminRegistration(StatesGroup):
-    name = State()
-
-class AdminEv(StatesGroup):
+class Admin(StatesGroup):
     ev = State()
     rem= State()
     red = State()
+    an = State()
 
-class UserRegistration(StatesGroup):
+class User(StatesGroup):
     name = State()
-
-class UserEv(StatesGroup):
     ev = State()

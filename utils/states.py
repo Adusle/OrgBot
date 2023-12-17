@@ -5,5 +5,5 @@ class AdminEv(StatesGroup):
 
 class UserRegistration(StatesGroup):
     name = State()
-    event_number = State()
+    
     

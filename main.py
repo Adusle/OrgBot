@@ -24,7 +24,7 @@ async def main():
     logging.basicConfig(level=logging.INFO)
 
     dp.include_router(admin_commands.router)
-    dp.include_router(adminreg.router)
+
     dp.include_router(user_commands.router)
 
 

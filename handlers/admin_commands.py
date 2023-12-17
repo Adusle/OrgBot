@@ -31,6 +31,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     await message.answer("Выступление добавлено")
     add_performance(message.text)
+    await state.clear()
 
 
 @router.message(F.text.lower() == "список регистрации")

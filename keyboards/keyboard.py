@@ -16,7 +16,6 @@ adminkeyboard = types.ReplyKeyboardMarkup(keyboard=adminbutton, resize_keyboard=
 
 adminbutton2 = [[KeyboardButton(text='Добавить позицию')],
                 [KeyboardButton(text='Удалить позицию')],
-                [KeyboardButton(text='Поменять местами позицим')],
+                [KeyboardButton(text='Поменять местами позиции')],
                 [KeyboardButton(text='Оповестить')]]
 adminkeyboard2 = types.ReplyKeyboardMarkup(keyboard=adminbutton2, resize_keyboard=True)
-

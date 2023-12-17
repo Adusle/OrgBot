@@ -1,13 +1,12 @@
 from aiogram import Router, F , types
 from data_base.bd import get_users_id, add_user
-from data_base.eventbd import add_username
 from keyboards import *
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.filters import Command , CommandObject, CommandStart
 from utils.states import UserEv, UserRegistration
-from data_base.eventbd import add_username, print_list
+from data_base.eventbd import add_username, print_list, add_user_id
 
 router = Router()
 
@@ -34,9 +33,14 @@ async def cmd_start(message: types.Message, state: FSMContext):
 
 @router.message(F.text.lower()=="мероприятие")
 async def keyboard_us(message: types.Message):
-    
-    print_list()
-    await message.answer(l, reply_markup=keyboard.event)
+    await message.answer("Список выступлений", reply_markup=keyboard.event)
+    data = print_list()
+    result_message = ""
+    for row in data:
+        id_value, event_value, username_value = row
+        result_message += f"Порядок: {id_value}, Название: {event_value} Выступает: {username_value}\n"
+    result_message = result_message.replace("None", "Участие не подтвердил ")
+    await message.answer(text=result_message)
 
 @router.message(F.text.lower()=="зарегистрироваться")
 async def keyboard_us(message: types.Message, state: FSMContext):
@@ -46,10 +50,11 @@ async def keyboard_us(message: types.Message, state: FSMContext):
 @router.message(UserEv.ev)
 async def keyboard_us(message: types.Message, state: FSMContext):
     await state.update_data(ev=message.text)
-    username = message.from_user.username
+    username = message.from_user.id
     await message.answer("Вы зарегистрировались", reply_markup=keyboard.event)
     print(message.text, username)
-    add_username(message.text, username)
+    add_user_id(message.text, username)
+    add_username(username)
     await state.clear()
 
 @router.message(F.text.lower()=="назад")

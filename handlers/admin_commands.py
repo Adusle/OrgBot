@@ -4,7 +4,7 @@ from aiogram.filters import Filter, Command
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from data_base.eventbd import print_list
+from data_base.eventbd import print_list, get_performance_username_id
 from data_base.admindb import check_admin, add_admin
 from utils.states import AdminEv
 from data_base.eventbd import *
@@ -63,6 +63,11 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await state.clear()
 
 
+@router.message(F.text.lower() == "оповестить")
+async def notification(message: Message, bot:Bot):
+    l = get_performance_username_id()
+    for username, id in l:
+        await bot.send_message(chat_id=id,text=f"Расписание изменилось, прошу ознакомиться, {username}")
 
 
 @router.message(F.text.lower() == "редактировать мероприятие ")

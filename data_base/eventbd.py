@@ -66,3 +66,15 @@ def add_username(user_id):
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_performance_username_id():
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT username, user_id FROM event')
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return data
+

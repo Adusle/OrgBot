@@ -69,14 +69,10 @@ async def notification(message: Message, bot:Bot):
     for username, id in l:
         await bot.send_message(chat_id=id,text=f"Расписание изменилось, прошу ознакомиться, {username}")
 
-
-@router.message(F.text.lower() == "редактировать мероприятие ")
-async def cmd_start(message: types.Message):
-    pass
-
-
-
-
-@router.message(F.text.lower() == "поменять местами позиции")
-async def cmd_start(message: types.Message):
-    pass
+@router.message(AdminEv.red)
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.update_data(red = message.text)
+    s = message.text
+    replace(s[0], s[2:])
+    await message.answer("Изменения внесены")
+    await state.clear()

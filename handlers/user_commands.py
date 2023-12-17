@@ -1,5 +1,6 @@
 from aiogram import Router, F , types
 from data_base.bd import get_users_id, add_user
+from data_base.eventbd import add_username
 from keyboards import *
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
@@ -33,8 +34,8 @@ async def cmd_start(message: types.Message, state: FSMContext):
 
 @router.message(F.text.lower()=="мероприятие")
 async def keyboard_us(message: types.Message):
-    l = '456'
-    print_list(l)
+    
+    print_list()
     await message.answer(l, reply_markup=keyboard.event)
 
 @router.message(F.text.lower()=="зарегистрироваться")

@@ -38,15 +38,19 @@ def remove_performance(id):
     cursor.close()
     conn.close()
 
-def print_list(l):
+def print_list():
     conn = sqlite3.connect('sql.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM event')
-    row = cursor.fetchone()
+    cursor.execute('SELECT id, event_name, username FROM event')
+    all_rows = cursor.fetchall()
+    
+    """
     while row is not None:
-        #print(" ".join([str(c) for c in row]))
+        print(" ".join([str(c) for c in row]))
         l = [str(c) for c in row]
         print(*l)
         row = cursor.fetchone()
+        """
     cursor.close()
     conn.close()
+    return all_rows

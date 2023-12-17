@@ -1,1 +1,1 @@
-from . import user_commands,admin_commands,adminreg
+from . import user_commands,admin_commands

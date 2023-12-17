@@ -71,12 +71,6 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer("Изменения внесены")
     await state.clear()
 
-"""router.message(F.text.lower() == "оповестить")
-async def notification(message: Message, bot:Bot):
-    l = get_performance_username_id()
-    for username, id in l:
-        await bot.send_message(chat_id=id,text=f"Расписание изменилось, прошу ознакомиться, {username}")
-"""
 
 @router.message(F.text.lower() == "вернуться")
 async def cmd_start(message: types.Message):
@@ -88,13 +82,11 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer("Оповестить всех или уведомить артиста?", reply_markup=keyboard.adminkeyboard3)
 
 @router.message(F.text.lower() == "оповестить всех")
-async def cmd_start(message: types.Message, state: FSMContext, bot:Bot):
-    await state.update_data(an = message.text)
+async def cmd_start(message: types.Message, bot:Bot):
     l = get_performance_username_id()
     for username, id in l:
         await bot.send_message(chat_id=id, text=f"Расписание изменилось, прошу ознакомиться, {username}", reply_markup=keyboard.adminkeyboard2)
 
 @router.message(F.text.lower() == "Уведомить артиста")
 async def cmd_start(message: types.Message, state: FSMContext, bot:Bot):
-    await state.update_data(an = message.text)
-   
+    await state.update_data(an = message.text, reply_markup=keyboard.adminkeyboard2)

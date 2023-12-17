@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 from data_base.admindb import check_admin, add_admin
 from utils.states import AdminEv
 from data_base.eventbd import *
+from keyboards import keyboard
 
 router = Router()
 
@@ -15,15 +16,16 @@ router = Router()
 async def cmd_start(message: types.Message):
         user_telegram_id = message.from_user.id
         username = message.from_user.username   #Получаем айди и имя пользователя
-        await message.answer("Ты уже в системе, даун")
         info = check_admin(user_telegram_id)
         if info == None:                        #Проверяем есть ли пользователь в БД
             add_admin(user_telegram_id,username)
-            await message.answer("Добро пожаловать, даун")
+            await message.answer("Добро пожаловать, даун", reply_markup=keyboard.adminkeyboard)
+        else:
+            await message.answer("Ты уже в системе, даун", reply_markup=keyboard.adminkeyboard)
 
 @router.message(F.text.lower() == "мероприятие")
 async def cmd_start(message: types.Message):
-    await message.answer("Список выступлений")
+    await message.answer("Список выступлений", reply_markup=keyboard.adminkeyboard2)
 
 @router.message(F.text.lower() == "добавить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):

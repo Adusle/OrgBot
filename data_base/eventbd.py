@@ -25,7 +25,7 @@ def add_performance(event_name):
 def add_username(id, username):
     conn = sqlite3.connect('sql.db')
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO event (username) VALUES (?) WHERE id = ?', (id, username))
+    cursor.execute('UPDATE event SET username = ? WHERE id = ?',(username, id,))
     conn.commit()
     cursor.close()
     conn.close()

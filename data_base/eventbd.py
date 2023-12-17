@@ -99,3 +99,13 @@ def replace(num1, num2):
     cursor.close()
     conn.close()
 
+def get_one_username_id(number):
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT username, user_id FROM event WHERE id = ?', (number,))
+    data = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+    return data

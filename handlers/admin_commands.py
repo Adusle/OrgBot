@@ -10,6 +10,7 @@ from utils.states import AdminEv
 from data_base.eventbd import *
 from keyboards import keyboard
 from aiogram import Bot
+ 
 
 router = Router()
 
@@ -35,7 +36,7 @@ async def cmd_start(message: types.Message):
         id_value, event_value, username_value = row
         result_message += f"Порядок: {id_value}, Название: {event_value} Выступает: {username_value}\n"
     result_message = result_message.replace("None", "Участие не подтвердил ")
-    await message.answer(text=result_message, reply_markup=keyboard.adminkeyboard2)) 
+    await message.answer(text=result_message, reply_markup=keyboard.adminkeyboard2) 
 
 @router.message(F.text.lower() == "добавить позицию")
 async def cmd_start(message: types.Message, state: FSMContext):
@@ -60,6 +61,9 @@ async def cmd_start(message: types.Message, state: FSMContext):
     await message.answer("Выступление удалено")
     remove_performance(message.text)
     await state.clear()
+
+
+
 
 @router.message(F.text.lower() == "редактировать мероприятие ")
 async def cmd_start(message: types.Message):

@@ -30,7 +30,23 @@ def add_username(id, username):
     cursor.close()
     conn.close()
 
-"""id ev us
-1 df df
-2 asd asd
-3 xcv xcv"""
+def remove_performance(id):
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM event WHERE id = ?',(id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def print_list(l):
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM event')
+    row = cursor.fetchone()
+    while row is not None:
+        #print(" ".join([str(c) for c in row]))
+        l = [str(c) for c in row]
+        print(*l)
+        row = cursor.fetchone()
+    cursor.close()
+    conn.close()

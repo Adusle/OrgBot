@@ -31,3 +31,16 @@ def add_admin(user_id, username):
     conn.commit()
     cursor.close()
     conn.close()
+    
+def get_performance_admin_id()
+
+def get_performance_username_id():
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT user_id FROM admins WHERE id = 1')
+    data = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return data
+
+    

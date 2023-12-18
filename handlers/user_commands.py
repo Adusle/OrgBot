@@ -39,19 +39,19 @@ async def keyboard_us(message: types.Message):
     await message.answer(text=result_message)
     
 @router.message(F.text.lower()=="пожаловаться")
-async def cmd_start(message: types.Message, bot:Bot):
+async def complain(message: types.Message, bot:Bot):
     user_telegram_id = message.from_user.id
     l = get_performance_admin_id()
     username = get_username_id(user_telegram_id)
     await bot.send_message(chat_id=id, text=f"Пользователь {username} не задержиться или не сможет выступить", reply_markup=keyboard.kb)
 
 @router.message(F.text.lower()=="зарегистрироваться")
-async def keyboard_us(message: types.Message, state: FSMContext):
+async def register(message: types.Message, state: FSMContext):
     await state.set_state(User.ev)
     await message.answer("Выберите номер выступления", reply_markup=keyboard.event)
 
 @router.message(User.ev)
-async def keyboard_us(message: types.Message, state: FSMContext):
+async def register_end(message: types.Message, state: FSMContext):
     await state.update_data(ev=message.text)
     username = message.from_user.id
     await message.answer("Вы зарегистрировались", reply_markup=keyboard.event)
@@ -61,6 +61,6 @@ async def keyboard_us(message: types.Message, state: FSMContext):
     await state.clear()
 
 @router.message(F.text.lower()=="назад")
-async def keyboard_us(message: types.Message):
+async def back_user_command(message: types.Message):
     await message.answer("Ты кент", reply_markup=keyboard.kb)
 

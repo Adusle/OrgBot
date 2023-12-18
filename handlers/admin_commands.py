@@ -4,7 +4,7 @@ from aiogram.filters import Filter, Command
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from data_base.admindb import check_admin, add_admin 
+from data_base.admindb import check_admin, add_admin, remove
 from utils.states import Admin
 from data_base.eventbd import *
 from keyboards import keyboard
@@ -84,7 +84,7 @@ async def notify(message: types.Message):
 async def notify_all(message: types.Message, bot:Bot):
     l = get_performance_username_id()
     for username, id in l:
-        await bot.send_message(chat_id=id, text=f"Расписание изменилось, прошу ознакомиться, {username}", reply_markup=keyboard.adminkeyboard2)
+        await bot.send_message(chat_id=id, text=f"Расписание изменилось, прошу ознакомиться, {username}")
 
 @router.message(F.text.lower() == "уведомить артиста")
 async def notify_one(message: types.Message, state: FSMContext):
@@ -108,13 +108,18 @@ async def notify_one_end(message: types.Message, state: FSMContext, bot:Bot):
         number1 = get_one_username_id(int(l[0]))
         number2 = get_one_username_id(int(l[1]))
         for username1, user_id1 in number1:
-            await bot.send_message(chat_id=user_id1,text=f"Выходите на сцену, {username1}")
+            await bot.send_message(chat_id=user_id1,text=f"Выходите на сцену, {username1}", reply_markup=keyboard.adminkeyboard2)
         for username2, user_id2 in number2:
-            await bot.send_message(chat_id=user_id2,text=f"Приготовьтесь, {username2}")
+            await bot.send_message(chat_id=user_id2,text=f"Приготовьтесь, {username2}", reply_markup=keyboard.adminkeyboard2)
     else:
         only_one_number = get_one_username_id(l)
         print(only_one_number)
         username = only_one_number[0]
         user_id = only_one_number[1]
-        await bot.send_message(chat_id=user_id,text=f"Выходите на сцену, {username}")
+        await bot.send_message(chat_id=user_id,text=f"Выходите на сцену, {username}", reply_markup=keyboard.adminkeyboard2)
     await state.clear()
+
+@router.message(F.text.lower() == "очистить")
+async def notify(message: types.Message):
+    remove()
+    await message.answer("Таблица очищено", reply_markup=keyboard.adminkeyboard)

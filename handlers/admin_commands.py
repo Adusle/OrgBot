@@ -24,7 +24,7 @@ async def cmd_halt(message: types.Message):
             await message.answer("Ты уже в системе", reply_markup=keyboard.adminkeyboard)
 
 @router.message(F.text.lower() == "мероприятие админ")
-async def cmd_start(message: types.Message):
+async def event_admin(message: types.Message):
     await message.answer("Список выступлений", reply_markup=keyboard.adminkeyboard2)
     data = print_list()
     result_message = ""

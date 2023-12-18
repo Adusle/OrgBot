@@ -1,5 +1,6 @@
-from aiogram import Router, F , types
-from data_base.bd import get_users_id, add_user
+from aiogram import Router, F , types, Bot
+from data_base.bd import get_users_id, add_user, get_username_id
+from data_base.adminbd import get_performance_admin_id
 from keyboards import *
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
@@ -38,8 +39,11 @@ async def keyboard_us(message: types.Message):
     await message.answer(text=result_message)
     
 @router.message(F.text.lower()=="пожаловаться")
-async def keyboard_us(message: types.Message):
-    await message.answer("Сообщение отправлено админу", reply_markup=keyboard.kb)
+async def cmd_start(message: types.Message, bot:Bot):
+    user_telegram_id = message.from_user.id
+    l = get_performance_admin_id()
+    username = get_username_id(user_telegram_id)
+    await bot.send_message(chat_id=id, text=f"Пользователь {username} не задержиться или не сможет выступить", reply_markup=keyboard.kb)
 
 @router.message(F.text.lower()=="зарегистрироваться")
 async def keyboard_us(message: types.Message, state: FSMContext):

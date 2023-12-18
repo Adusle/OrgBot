@@ -32,3 +32,12 @@ def get_users_id(user_id):
     conn.close()
     return users
 
+def get_username_id(user_id):
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT username FROM users WHERE user_id = ?', (user_id,))
+    users = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return users
+

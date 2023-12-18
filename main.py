@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import aiogram
 import os
 from handlers import user_commands, admin_commands
 from aiogram import Bot, Dispatcher
@@ -7,7 +8,6 @@ from dotenv import load_dotenv
 from data_base.bd import *
 from data_base.admindb import *
 from data_base.eventbd import *
-
 load_dotenv()
 create_table()
 create_admin_table()

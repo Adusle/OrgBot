@@ -19,9 +19,9 @@ async def cmd_start(message: types.Message):
         info = check_admin(user_telegram_id)
         if info == None:                        #Проверяем есть ли пользователь в БД
             add_admin(user_telegram_id,username)
-            await message.answer("Добро пожаловать, даун", reply_markup=keyboard.adminkeyboard)
+            await message.answer("Добро пожаловать", reply_markup=keyboard.adminkeyboard)
         else:
-            await message.answer("Ты уже в системе, даун", reply_markup=keyboard.adminkeyboard)
+            await message.answer("Ты уже в системе", reply_markup=keyboard.adminkeyboard)
 
 @router.message(F.text.lower() == "мероприятие админ")
 async def cmd_start(message: types.Message):

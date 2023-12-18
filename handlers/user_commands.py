@@ -1,6 +1,6 @@
 from aiogram import Router, F , types, Bot
 from data_base.bd import get_users_id, add_user, get_username_id
-from data_base.adminbd import get_performance_admin_id
+from data_base.admindb import get_performance_admin_id
 from keyboards import *
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
@@ -42,8 +42,9 @@ async def keyboard_us(message: types.Message):
 async def complain(message: types.Message, bot:Bot):
     user_telegram_id = message.from_user.id
     l = get_performance_admin_id()
+    print(l)
     username = get_username_id(user_telegram_id)
-    await bot.send_message(chat_id=id, text=f"Пользователь {username} не задержиться или не сможет выступить", reply_markup=keyboard.kb)
+    await bot.send_message(chat_id=l[0], text=f"Пользователь {username} не задержиться или не сможет выступить", reply_markup=keyboard.kb)
 
 @router.message(F.text.lower()=="зарегистрироваться")
 async def register(message: types.Message, state: FSMContext):
@@ -62,5 +63,5 @@ async def register_end(message: types.Message, state: FSMContext):
 
 @router.message(F.text.lower()=="назад")
 async def back_user_command(message: types.Message):
-    await message.answer("Ты кент", reply_markup=keyboard.kb)
+    await message.answer("Выберите опцию", reply_markup=keyboard.kb)
 

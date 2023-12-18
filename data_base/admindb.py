@@ -32,9 +32,9 @@ def add_admin(user_id, username):
     cursor.close()
     conn.close()
     
-def get_performance_admin_id()
 
-def get_performance_username_id():
+
+def get_performance_admin_id():
     conn = sqlite3.connect('sql.db')
     cursor = conn.cursor()
     cursor.execute('SELECT user_id FROM admins WHERE id = 1')
@@ -43,4 +43,11 @@ def get_performance_username_id():
     conn.close()
     return data
 
+def remove():
+    conn = sqlite3.connect('sql.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM users')
+    conn.commit()
+    cursor.close()
+    conn.close()
     

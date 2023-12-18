@@ -36,6 +36,10 @@ async def keyboard_us(message: types.Message):
         result_message += f"Порядок: {id_value}, Название: {event_value} Выступает: {username_value}\n"
     result_message = result_message.replace("None", "Участие не подтвердил ")
     await message.answer(text=result_message)
+    
+@router.message(F.text.lower()=="пожаловаться")
+async def keyboard_us(message: types.Message):
+    await message.answer("Сообщение отправлено админу", reply_markup=keyboard.kb)
 
 @router.message(F.text.lower()=="зарегистрироваться")
 async def keyboard_us(message: types.Message, state: FSMContext):

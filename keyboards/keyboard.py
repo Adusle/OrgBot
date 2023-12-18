@@ -10,7 +10,8 @@ ev = [[KeyboardButton(text='Зарегистрироваться')],
           [KeyboardButton(text='Назад')]]
 event = types.ReplyKeyboardMarkup(keyboard=ev,resize_keyboard=True)
 
-adminbutton = [[KeyboardButton(text='Мероприятие админ')]]
+adminbutton = [[KeyboardButton(text='Мероприятие админ')],
+[KeyboardButton(text='Очистить')]]
 
 adminkeyboard = types.ReplyKeyboardMarkup(keyboard=adminbutton, resize_keyboard=True)
 

@@ -13,7 +13,7 @@ router = Router()
 
 #Чет надо будет сделать с роутерами, по папкам их распихать, иначе их просто дохуя блять
 @router.message(Command("halt"))#сделать парольную секретную фразу для админа
-async def cmd_start(message: types.Message):
+async def cmd_halt(message: types.Message):
         user_telegram_id = message.from_user.id
         username = message.from_user.username   #Получаем айди и имя пользователя
         info = check_admin(user_telegram_id)

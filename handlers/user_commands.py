@@ -26,11 +26,6 @@ async def add_user_name(message: types.Message, state: FSMContext):
     await message.answer("Регистрация прошла успешно", reply_markup=keyboard.kb)
     await state.clear()
 
-
-@router.message(Command("info"))
-async def cmd_start(message: types.Message, state: FSMContext):
-    await message.answer("Что он может? Да нихуя собственно", reply_markup=ReplyKeyboardRemove())
-
 @router.message(F.text.lower()=="мероприятие")
 async def keyboard_us(message: types.Message):
     await message.answer("Список выступлений", reply_markup=keyboard.event)

@@ -15,7 +15,10 @@ create_event_table()
 
 
 logging.basicConfig(level=logging.INFO)
+
+print("DA")
 print("Hello world")
+print("NO")
 
 async def main():
     bot = Bot("6765186512:AAGKXrz_2gXWZYXti6zVc5_B2hcZZUCwHy8")
